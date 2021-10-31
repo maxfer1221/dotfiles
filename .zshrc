@@ -38,5 +38,9 @@ zstyle ':completion:*:kill:*' command 'ps -u $USER -o pid,%cpu,tty,cputime,cmd'
 
 alias fix-screens='zsh ~/.screenlayout/main.sh'
 
+function trash() {
+  mkdir -p ~/Trash && mv -nf "$@" ~/Trash
+}
+
 alias t-dec='~/Applications/toggle-dec/toggle-decorations $(wmctrl -lx | grep -E "zathura" | grep -oE "[0-9a-z]{10}")'
 alias :q='exit'
