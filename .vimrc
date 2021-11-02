@@ -76,6 +76,9 @@ set conceallevel=1
 let g:tex_conceal='abdmg'
 let g:vimtex_view_general_viewer = 'zathura'
 
+" highlight line in insert mode
+:autocmd InsertEnter,InsertLeave * set cul!
+
 " key-bindings
 nnoremap k gj
 nnoremap j gk
