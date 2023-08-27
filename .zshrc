@@ -8,6 +8,12 @@ setopt histignorealldups sharehistory
 
 # Use emacs keybindings even if our EDITOR is set to vi
 bindkey -e
+bindkey "^[[1;5C" forward-word
+bindkey "^[[1;5D" backward-word
+bindkey '^[[1;5C' emacs-forward-word
+bindkey '^[^[[D' emacs-forward-word
+bindkey ";5C" forward-word
+bindkey ";5D" backward-word
 
 # Keep 1000 lines of history within the shell and save it to ~/.zsh_history:
 HISTSIZE=1000
@@ -36,11 +42,13 @@ zstyle ':completion:*' verbose true
 zstyle ':completion:*:*:kill:*:processes' list-colors '=(#b) #([0-9]#)*=0=01;31'
 zstyle ':completion:*:kill:*' command 'ps -u $USER -o pid,%cpu,tty,cputime,cmd'
 
-alias fix-screens='zsh ~/.screenlayout/main.sh'
+alias :q='exit'
 
-function trash() {
-  mkdir -p ~/Trash && mv -nf "$@" ~/Trash
+zathuracl() {
+    zathura "$@" &;
+    clear;
 }
 
-alias t-dec='~/Applications/toggle-dec/toggle-decorations $(wmctrl -lx | grep -E "zathura" | grep -oE "[0-9a-z]{10}")'
-alias :q='exit'
+export NVM_DIR="$HOME/.nvm"
+[ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"  # This loads nvm
+[ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion"  # This loads nvm bash_completion

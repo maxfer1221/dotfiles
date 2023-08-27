@@ -1,5 +1,4 @@
 set nocompatible
-
 filetype off
 
 call plug#begin('~/.vim/plugged')
@@ -10,15 +9,18 @@ Plug 'junegunn/goyo.vim'
 Plug 'arcticicestudio/nord-vim'
 Plug 'lervag/vimtex'
 Plug 'vim-airline/vim-airline'
+Plug 'vim-airline/vim-airline-themes'
 Plug 'psf/black'
 Plug 'preservim/nerdtree'
+Plug 'rakr/vim-one'
 
 call plug#end()
 
 " color scheme
 set t_Co=256
+" colorscheme nord 
+colorscheme nord
 set background=dark
-colorscheme nord 
 highlight Normal ctermbg=NONE
 highlight nonText ctermbg=NONE
 
@@ -53,7 +55,7 @@ set autoindent
 set smartindent
 set expandtab
 " ruler
-set colorcolumn=80
+"set colorcolumn=80
 highlight ColorColumn ctermbg=0 guibg=grey
 set hls is
 set ic
@@ -67,6 +69,8 @@ set laststatus=2
 nnoremap <leader>n :NERDTreeFocus<CR>
 nnoremap <C-n> NERDTreeToggle<CR>
 nnoremap <leader>f :NERDTreeFind<CR>
+
+hi CursorLine cterm=NONE ctermbg=NONE
 
 " vimtex
 let g:tex_flavor='latex'
@@ -91,24 +95,44 @@ nnoremap <leader>v :vsp<CR>
 nnoremap <leader>b :sp<CR>
 nnoremap <leader>x :wincmd c<CR>
 
-nnoremap <C-g> :Goyo 120<CR>
-nnoremap <C-r> :source ~/.vimrc<CR>
+nnoremap <C-G> :Goyo<CR>
 
 nnoremap <silent> <leader>s :call ToggleSpell()<CR>
 
 " Airline
-let g:airline_powerline_fonts = 1
-let g:airline_section_y=''
-let g:airline_section_z=''
+" let g:airline#extensions#tabline#enabled = 1
+let g:airline#extensions#tabline#fnamemod = ':t'
+let g:airline#extensions#branch#enabled = 1
+
+let g:airline_theme = 'base16'
+
+let g:airline_section_b = ''
+let g:airline_section_x = '%{line(".")}/%{line("$")}'
+let g:airline_section_y = ''
+let g:airline_section_z = '%{col(".")}/%{col("$")}'
+
+" let g:airline_powerline_fonts = 1
 autocmd VimEnter * AirlineToggleWhitespace
 let g:airline_right_sep=''
 let g:airline_skip_empty_sections = 1
-" let g:airline_section_a=%#__accent_bold#%{airline#util#wrap(airline#parts#mode(),0)}%
 
 let g:airline_detect_spell=0
-let g:airline#extensions#wordcount#enabled = 0
+let g:airline#extensions#searchcount#enabled = 0
+" let g:airline#extensions#wordcount#enabled = 0
 
-autocmd VimEnter * echo 'hello, maximo'
+" set custom colors for airline
+" Set custom colors for airline
+"let g:airline_highlighting_cache_enabled = 0
+
+" Set the color of the airline components
+"highlight AirlineA ctermfg=red guifg=#000000
+"highlight AirlineB ctermfg=blue guifg=#123321
+"highlight AirlineC ctermfg=green guifg=#ee33dd
+"highlight AirlineX ctermfg=white guifg=#55ee55
+"highlight AirlineY ctermfg=lightred guifg=#111111
+"highlight AirlineZ ctermfg=yellow guifg=#111111
+"highlight AirlineStatusLine ctermbg=black guibg=#111111
+"highlight AirlineStatusLineNC ctermbg=cyan guibg=#111111
 
 " Snippets
 let g:UltiSnipsExpandTrigger = '<tab>'
@@ -119,14 +143,9 @@ let g:UltiSnipsSnippetDirectories=["UltiSnips", "masterTexSnips"]
 
 " DOESN'T WORK VVVV
 " remove zathura window decorations
-augroup vimrc_vimtex
-  autocmd!
-  au User VimtexEventView call MyViewHook()
-augroup END
 
 function! MyViewHook() abort
   " Ensure this hook only executes within a VimTeX buffer
-  
 
 
   if !exists('b:vimtex') | return | endif
@@ -141,3 +160,21 @@ function! ToggleSpell() abort
         set spell
     endif
 endfunction
+
+autocmd vimenter * hi Normal guibg=NONE ctermbg=NONE
+
+" weird stuff vim complains about
+map  <Esc>[1;5A <C-Up>
+map  <Esc>[1;5B <C-Down>
+map  <Esc>[1;5D <C-Left>
+map  <Esc>[1;5C <C-Right>
+cmap <Esc>[1;5A <C-Up>
+cmap <Esc>[1;5B <C-Down>
+cmap <Esc>[1;5D <C-Left>
+cmap <Esc>[1;5C <C-Right>
+
+map  <Esc>[1;2D <S-Left>
+map  <Esc>[1;2C <S-Right>
+cmap <Esc>[1;2D <S-Left>
+cmap <Esc>[1;2C <S-Right>
+set term=xterm
